@@ -1,0 +1,4 @@
+<p>Gebruikers:</p>
+<ul>
+    <li *ngFor="let gebruiker of (gebruikers | async)">{{gebruiker.gebruikersnaam}}</li>
+</ul>

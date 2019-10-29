@@ -1,0 +1,10 @@
+<h2>Inloggen</h2>
+<form (ngSubmit)="onSubmit()">
+    <p>
+        <input placeholder="gebruikersnaam" type="text" [(ngModel)]="model.gebruikersnaam" name="gebruikersnaam" />
+    </p>    
+    <p>
+        <input placeholder="wachtwoord" type="text" [(ngModel)]="model.wachtwoord" name="wachtwoord" />
+    </p>
+    <p><button color="primary" type="submit" [disabled]="submitted">Log in</button></p>
+</form>
