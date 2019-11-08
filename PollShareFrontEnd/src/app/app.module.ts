@@ -25,31 +25,37 @@ import { SecurityInterceptor } from './inloggen/security.interceptor';
 
 //Test om naar dashboard te gaan
 import { InloggenDashboardComponent } from './inloggen/inloggen-dashboard/inloggen-dashboard.component';
+import { VriendenComponent } from './vrienden/vrienden.component';
+import { PollComponent } from './polls/poll/poll.component';
 
 const appRoutes: Routes = [
   { path: '', component: StartComponent },
   { path: 'inloggen', component: InloggenComponent },
-  { path: 'registreren', component: RegistrerenComponent},
+  { path: 'registreren', component: RegistrerenComponent },
   { path: 'gebruikers', component: GebruikersComponent },
-  { path: 'dashboard', component: InloggenDashboardComponent}
-  ];
+  { path: 'dashboard', component: InloggenDashboardComponent },
+  { path: 'uitnodigenVrienden', component: VriendenComponent },
+  { path: 'aanmakenPoll', component: PollComponent }
+];
 
 @NgModule({
   declarations: [
     AppComponent,
     StartComponent,
     InloggenComponent,
-    RegistrerenComponent
+    RegistrerenComponent,
+    VriendenComponent,
+    PollComponent
   ],
   imports: [
     BrowserModule,
-    RouterModule.forRoot(appRoutes, { enableTracing: true }),
+    RouterModule.forRoot(appRoutes, { enableTracing: false }),
     ReactiveFormsModule,
     FormsModule,
     InloggenModule,
     HttpClientModule,
     GebruikersModule
-    ],
+  ],
   providers: [{
     provide: HTTP_INTERCEPTORS,
     useClass: SecurityInterceptor,

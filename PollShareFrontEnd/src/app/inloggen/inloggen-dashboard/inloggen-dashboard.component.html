@@ -1,4 +1,14 @@
 <h1>Dashboard</h1>
 <h2>Logged in als: {{ gebruikersnaam }}</h2>
 <h2>Email: {{ email }}</h2>
-<p><button color="primary" (click)="uitloggen()">Log uit</button></p>
+<h2>Vrienden:</h2>
+<ul>
+    <li *ngFor="let vriend of vrienden">{{vriend.gebruikersnaam}}</li>
+</ul>
+<h2>Meldingen:</h2>
+<ul>
+    <li *ngFor="let melding of meldingen">{{melding.huidigeGebruikerID}}</li>
+</ul>
+<p><button (click)="uitloggen()">Log uit</button></p>
+<p><button (click)="aanmakenPoll()">Aanmaken poll</button></p>
+<p><button (click)="uitnodigenVrienden()">Voeg vriend toe</button></p>

@@ -1,0 +1,21 @@
+<h2>Voeg vrienden toe</h2>
+
+<form [formGroup]="meldingForm" (ngSubmit)="onSubmit()">
+    <p>Vriend:
+        <input type="text" formControlName="vriendID" />
+    </p>
+    <p>
+        <button color="primary" type="submit" [disabled]="!meldingForm.valid || submitted">Voeg poll toe</button>
+    </p>
+</form>
+
+<!-- <form (ngSubmit)="onSubmit()"> -->
+<!-- <ul>
+    <li *ngFor="let gebruiker of (gebruikers | async)">
+        {{gebruiker.gebruikersnaam}}
+        <button (click)="stuurVriendschapsVerzoek(gebruiker)">Voeg toe</button>
+    </li>
+</ul> -->
+<!-- <p><input placeholder="email" type="text" [(ngModel)]="model.email" name="email" /></p> -->
+<!-- <p><button color="primary" type="submit" [disabled]="submitted">Voeg toe</button></p> -->
+<!-- </form> -->

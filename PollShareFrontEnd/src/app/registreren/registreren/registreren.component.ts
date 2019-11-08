@@ -12,16 +12,16 @@ export class RegistrerenComponent implements OnInit {
 
   submitted: boolean = false;
 
-  gebruikerForm = this.fb.group({
-    email: ['', Validators.required],
-    wachtwoord: ['', Validators.required],
-    gebruikersnaam: ['', Validators.required]
-  })
-
   constructor(
     private fb: FormBuilder, 
     private _gebruikerService: GebruikerService,
     private router: Router) { }
+
+  gebruikerForm = this.fb.group({
+    email: ['', Validators.required],
+    wachtwoord: ['', Validators.required],
+    gebruikersnaam: ['', Validators.required]
+  }) 
 
   onSubmit() {
     this.submitted = true;

@@ -15,6 +15,10 @@ export class GebruikerService {
     return this.http.get<Gebruiker[]>("https://localhost:44376/api/gebruiker");
   }
 
+  getGebruiker(gebruikerID: number) {
+    return this.http.get<Gebruiker>("https://localhost:44376/api/gebruiker/" + gebruikerID);
+  }
+
   addGebruiker(gebruiker: Gebruiker) {
     return this.http.post<Gebruiker>("https://localhost:44376/api/gebruiker", gebruiker);
   }

@@ -5,6 +5,7 @@ import { GebruikerLogin } from '../models/gebruiker-login.model';
 import { Router, NavigationExtras } from '@angular/router';
 
 import { InloggenDashboardComponent } from '../inloggen-dashboard/inloggen-dashboard.component';
+import { Melding } from 'src/app/meldingen/models/melding.model';
 
 @Component({
   selector: 'app-inloggen',
@@ -12,13 +13,13 @@ import { InloggenDashboardComponent } from '../inloggen-dashboard/inloggen-dashb
   styleUrls: ['./inloggen.component.css']
 })
 export class InloggenComponent implements OnInit {
+  
+  submitted: boolean = false;
 
   constructor(
     private _authenticateService: AuthenticateService,
     private router: Router
   ) { }
-
-  submitted: boolean = false;
 
   model: GebruikerLogin = new GebruikerLogin(
     "Test",
@@ -33,8 +34,11 @@ export class InloggenComponent implements OnInit {
       //Naar dashboardComponent gaan
       let navigationExtras: NavigationExtras = {
         queryParams: {
+          "gebruikerID": result.gebruikerID,
           "gebruikersnaam": result.gebruikersnaam,
-          "email": result.email
+          "email": result.email,
+          "vrienden": result.vrienden,
+          "meldingen": result.meldingen
         }
       };
       this.router.navigate(['/dashboard'], navigationExtras);
