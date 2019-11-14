@@ -6,11 +6,10 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { InloggenDashboardComponent } from './inloggen-dashboard/inloggen-dashboard.component';
 
 @NgModule({
-  //declarations: [InloggenComponent],
+  declarations: [],
   imports: [
     CommonModule,
     ReactiveFormsModule
   ],
-  declarations: [InloggenDashboardComponent]
 })
 export class InloggenModule { }

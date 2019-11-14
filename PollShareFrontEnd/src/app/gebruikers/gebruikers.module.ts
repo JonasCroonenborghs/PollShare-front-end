@@ -3,12 +3,10 @@ import { CommonModule } from '@angular/common';
 import { GebruikersComponent } from './gebruikers/gebruikers.component';
 
 @NgModule({
-  declarations: [GebruikersComponent],
+  declarations: [],
   imports: [
     CommonModule
   ],
-  exports: [
-    GebruikersComponent
-  ]
+  exports: []
 })
 export class GebruikersModule { }

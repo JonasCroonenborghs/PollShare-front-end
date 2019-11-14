@@ -1,15 +1,22 @@
-<h2>Registreren</h2>
-<form [formGroup]="gebruikerForm" (ngSubmit)="onSubmit()">
-    <p>Email adress:
-        <input type="text" formControlName="email" />
-    </p>
-    <p>Wachtwoord:
-        <input type="text" formControlName="wachtwoord" />
-    </p>
-    <p>Gebruikersnaam:
-        <input type="text" formControlName="gebruikersnaam" />
-    </p>
-    <p>
-        <button color="primary" type="submit" [disabled]="!gebruikerForm.valid || submitted">Submit</button>
-    </p>
-</form>
+<div class="center">
+    <mat-card>
+        <mat-icon>person_add</mat-icon>
+        <h2>Registreren</h2>
+        <form [formGroup]="gebruikerForm" (ngSubmit)="onSubmit()">
+            <mat-form-field>
+                <input matInput placeholder="Email" type="text" formControlName="email" />
+            </mat-form-field>
+            <br />
+            <mat-form-field>
+                <input matInput placeholder="Wachtwoord" type="text" formControlName="wachtwoord" />
+            </mat-form-field>
+            <br />
+            <mat-form-field>
+                <input matInput placeholder="Gebruikersnaam" type="text" formControlName="gebruikersnaam" />
+            </mat-form-field>
+            <p>
+                <button mat-raised-button color="primary" type="submit" [disabled]="!gebruikerForm.valid || submitted">Registreer</button>
+            </p>
+        </form>
+    </mat-card>
+</div>

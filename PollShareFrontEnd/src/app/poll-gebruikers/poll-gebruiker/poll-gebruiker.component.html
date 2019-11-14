@@ -1,0 +1,30 @@
+<div class="center">
+    <mat-card>
+        <h2>PollGebruikers toevoegen</h2>
+        <form [formGroup]="pollGebruikerForm" (ngSubmit)="onSubmit()">
+            <!-- <mat-form-field>
+                <input matInput placeholder="gebruikerID" type="text" formControlName="gebruikerID" />
+            </mat-form-field> -->
+            <br />
+            <mat-form-field>
+                <mat-label>Vrienden</mat-label>
+                <mat-select formControlName="gebruikerID">
+                    <mat-option *ngFor="let vriend of (vrienden | async)" [value]="vriend.gebruikerID">
+                        {{vriend.gebruikersnaam}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <p>
+                <button mat-raised-button color="primary" type="submit"
+                    [disabled]="!pollGebruikerForm.valid || submitted">Voeg
+                    pollGebruiker toe</button>
+            </p>
+            <mat-list role="list">
+                <mat-list-item role="listitem" *ngFor="let pollGebruiker of (pollGebruikers | async)">
+                    {{pollGebruiker.gebruikerID}}
+                </mat-list-item>
+            </mat-list>
+        </form>
+        <mat-progress-bar mode="determinate" value="100"></mat-progress-bar>
+    </mat-card>
+</div>

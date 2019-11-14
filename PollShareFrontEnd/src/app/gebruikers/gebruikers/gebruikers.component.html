@@ -1,4 +1,14 @@
-<p>Gebruikers:</p>
-<ul>
-    <li *ngFor="let gebruiker of (gebruikers | async)">{{gebruiker.gebruikersnaam}}</li>
-</ul>
+<div class="center">
+  <mat-card>
+    <h2>Gebruikers</h2>
+    <mat-selection-list #gebruikersList>
+      <mat-list-option *ngFor="let gebruiker of (gebruikers | async)">
+        {{gebruiker.gebruikersnaam}}
+      </mat-list-option>
+    </mat-selection-list>
+
+    <p>
+      Options selected: {{gebruikersList.selectedOptions.selected.length}}
+    </p>
+  </mat-card>
+</div>

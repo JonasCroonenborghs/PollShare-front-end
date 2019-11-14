@@ -1,13 +1,17 @@
-<h2>Voeg vrienden toe</h2>
-
-<form [formGroup]="meldingForm" (ngSubmit)="onSubmit()">
-    <p>Vriend:
-        <input type="text" formControlName="vriendID" />
-    </p>
-    <p>
-        <button color="primary" type="submit" [disabled]="!meldingForm.valid || submitted">Voeg poll toe</button>
-    </p>
-</form>
+<div class="center">
+    <mat-card>
+        <h2>Voeg vrienden toe</h2>
+        <form [formGroup]="meldingForm" (ngSubmit)="onSubmit()">
+            <mat-form-field>
+                <input matInput placeholder="vriendID" type="text" formControlName="vriendID" />
+            </mat-form-field>
+            <p>
+                <button mat-raised-button color="primary" type="submit"
+                    [disabled]="!meldingForm.valid || submitted">Voeg vriend toe</button>
+            </p>
+        </form>
+    </mat-card>
+</div>
 
 <!-- <form (ngSubmit)="onSubmit()"> -->
 <!-- <ul>

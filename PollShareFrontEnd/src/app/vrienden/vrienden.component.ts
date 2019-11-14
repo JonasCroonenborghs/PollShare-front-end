@@ -19,6 +19,8 @@ export class VriendenComponent implements OnInit {
   gebruikerID: number;
   gebruikers: Observable<Gebruiker[]>;
 
+  melding: Melding;
+
   constructor(
     private fb: FormBuilder,
     private _gebruikerService: GebruikerService,
@@ -34,15 +36,29 @@ export class VriendenComponent implements OnInit {
   }
 
   meldingForm = this.fb.group({
-    //huidigeGebruikerID: this.gebruikerID geeft error
-    huidigeGebruikerID: 2,
+    huidigeGebruikerID: '',
     vriendID: '',
-    aanvaard: false
+    type: "Vriendschapsverzoek"
   });
 
   onSubmit() {
-    this.submitted = true;
+    // this.submitted = true;
+    this.meldingForm.value.huidigeGebruikerID = this.gebruikerID;
+
+    // Toevoegen van de melding
     this._meldingService.addMelding(this.meldingForm.value).subscribe();
+    
+    this.melding = this.meldingForm.value;
+
+    // Toevoegen van melding aan vriend
+    this._gebruikerService.getGebruiker(this.meldingForm.value.vriendID).subscribe(result => {
+      // Hier melding (this.melding) toevoegen aan vriendGebruiker (result)
+      console.log(result);
+      console.log(this.melding);
+      this._gebruikerService.updateGebruiker(result, this.melding);
+    });
+
+    this.router.navigate(['/dashboard']);
   }
 
   ngOnInit() { }

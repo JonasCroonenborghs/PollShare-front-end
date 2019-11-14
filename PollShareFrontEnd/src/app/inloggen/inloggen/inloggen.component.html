@@ -1,10 +1,19 @@
-<h2>Inloggen</h2>
-<form (ngSubmit)="onSubmit()">
-    <p>
-        <input placeholder="gebruikersnaam" type="text" [(ngModel)]="model.gebruikersnaam" name="gebruikersnaam" />
-    </p>    
-    <p>
-        <input placeholder="wachtwoord" type="text" [(ngModel)]="model.wachtwoord" name="wachtwoord" />
-    </p>
-    <p><button color="primary" type="submit" [disabled]="submitted">Log in</button></p>
-</form>
+<div class="center">
+    <mat-card>
+        <h2>Inloggen</h2>
+        <form (ngSubmit)="onSubmit()">
+            <mat-form-field>
+                <input matInput placeholder="Gebruikersnaam" type="text" [(ngModel)]="model.gebruikersnaam"
+                    name="gebruikersnaam" />
+            </mat-form-field>
+            <br />
+            <mat-form-field>
+                <input matInput placeholder="Wachtwoord" type="password" [(ngModel)]="model.wachtwoord" name="wachtwoord" />
+            </mat-form-field>
+            <br />
+            <p>
+                <button mat-raised-button color="primary" type="submit" [disabled]="submitted">Log in</button>
+            </p>
+        </form>
+    </mat-card>
+</div>

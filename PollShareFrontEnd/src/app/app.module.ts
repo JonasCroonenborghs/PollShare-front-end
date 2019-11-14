@@ -28,6 +28,25 @@ import { InloggenDashboardComponent } from './inloggen/inloggen-dashboard/inlogg
 import { VriendenComponent } from './vrienden/vrienden.component';
 import { PollComponent } from './polls/poll/poll.component';
 
+//Angular Material
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatButtonModule } from '@angular/material/button';
+import { MatTabsModule, MatSidenavModule, MatToolbarModule, MatIconModule, MatListModule } from '@angular/material';
+import { MatCardModule } from '@angular/material/card';
+import { MatInputModule } from '@angular/material/input';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatBadgeModule } from '@angular/material/badge';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatSelectModule } from '@angular/material/select';
+
+import { MenuComponent } from './menu/menu.component';
+import { SidenavListComponent } from './menu/sidenav-list/sidenav-list.component';
+import { AntwoordComponent } from './antwoorden/antwoord/antwoord.component';
+import { PollGebruiker } from './poll-gebruikers/models/poll-gebruiker.model';
+import { PollGebruikerComponent } from './poll-gebruikers/poll-gebruiker/poll-gebruiker.component';
+import { StemComponent } from './stemmen/stem/stem.component';
+
 const appRoutes: Routes = [
   { path: '', component: StartComponent },
   { path: 'inloggen', component: InloggenComponent },
@@ -35,7 +54,10 @@ const appRoutes: Routes = [
   { path: 'gebruikers', component: GebruikersComponent },
   { path: 'dashboard', component: InloggenDashboardComponent },
   { path: 'uitnodigenVrienden', component: VriendenComponent },
-  { path: 'aanmakenPoll', component: PollComponent }
+  { path: 'aanmakenPoll', component: PollComponent },
+  { path: 'aanmakenAntwoord', component: AntwoordComponent },
+  { path: 'pollGebruiker', component: PollGebruikerComponent },
+  { path: 'StemToevoegen', component: StemComponent }
 ];
 
 @NgModule({
@@ -45,7 +67,14 @@ const appRoutes: Routes = [
     InloggenComponent,
     RegistrerenComponent,
     VriendenComponent,
-    PollComponent
+    PollComponent,
+    MenuComponent,
+    SidenavListComponent,
+    GebruikersComponent,
+    InloggenDashboardComponent,
+    AntwoordComponent,
+    PollGebruikerComponent,
+    StemComponent
   ],
   imports: [
     BrowserModule,
@@ -54,7 +83,21 @@ const appRoutes: Routes = [
     FormsModule,
     InloggenModule,
     HttpClientModule,
-    GebruikersModule
+    GebruikersModule,
+    BrowserAnimationsModule,
+    MatButtonModule,
+    MatTabsModule,
+    MatSidenavModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatListModule,
+    MatCardModule,
+    MatInputModule,
+    MatGridListModule,
+    MatBadgeModule,
+    MatExpansionModule,
+    MatProgressBarModule,
+    MatSelectModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

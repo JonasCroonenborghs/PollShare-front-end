@@ -1,0 +1,23 @@
+<div class="center">
+    <mat-card>
+        <h2>Antwoorden toevoegen</h2>
+        <form [formGroup]="antwoordForm" (ngSubmit)="onSubmit()">
+            <mat-form-field>
+                <input matInput placeholder="Antwoord" type="text" formControlName="antwoord" />
+            </mat-form-field>
+            <p>
+                <button mat-raised-button color="primary" type="submit" [disabled]="!antwoordForm.valid || submitted">Voeg
+                    antwoord toe</button>
+            </p>
+            <mat-list role="list">
+                <mat-list-item role="listitem" *ngFor="let antwoord of (antwoorden | async)">
+                    {{antwoord.antwoord}}
+                </mat-list-item>
+              </mat-list>
+        </form>
+        <p>
+            <button mat-raised-button color="primary" (click)="toevoegenPollGebruikers()">Voeg vrienden toe</button>
+        </p>
+        <mat-progress-bar mode="determinate" value="60"></mat-progress-bar>
+    </mat-card>
+</div>

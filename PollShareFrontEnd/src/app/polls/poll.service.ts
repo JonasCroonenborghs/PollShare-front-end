@@ -18,6 +18,14 @@ export class PollService {
     return this.http.get<Poll>("https://localhost:44376/api/poll/" + pollID);
   }
 
+  getPollByNaam(naam: string) {
+    return this.http.get<Poll>("https://localhost:44376/api/Poll/naam?naam=" + naam);
+  }
+
+  GetPollsByGebruikerID(gebruikerID: number) {
+    return this.http.get<Poll[]>("https://localhost:44376/api/Poll/pollGebruikerID?gebruikerID=" + gebruikerID);
+  }
+
   addPoll(poll: Poll) {
     return this.http.post<Poll>("https://localhost:44376/api/poll", poll);
   }

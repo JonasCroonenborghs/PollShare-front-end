@@ -14,8 +14,8 @@ export class PollGebruikerService {
     return this.http.get<PollGebruiker[]>("https://localhost:44376/api/pollGebruiker");
   }
 
-  getPollGebruiker(pollGebruikerID: number) {
-    return this.http.get<PollGebruiker>("https://localhost:44376/api/pollGebruiker/" + pollGebruikerID);
+  GetPollGebruikersByPollID(pollID: number) {
+    return this.http.get<PollGebruiker[]>("https://localhost:44376/api/PollGebruiker/pollID?pollID=" + pollID);
   }
 
   addPollGebruiker(pollGebruiker: PollGebruiker) {

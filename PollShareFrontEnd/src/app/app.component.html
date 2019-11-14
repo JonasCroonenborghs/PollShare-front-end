@@ -1,4 +1,4 @@
-<nav>
+<!-- <nav>
   <ul>
     <li><a routerLink="/" routerLinkActive="active">Startpagina</a></li>
     <li><a routerLink="/inloggen" routerLinkActive="active">Inloggen</a></li>
@@ -8,4 +8,17 @@
 </nav>
 <div>
   <router-outlet></router-outlet>
-</div>
+</div> -->
+
+
+<mat-sidenav-container>
+  <mat-sidenav #sidenav role="navigation">
+      <app-sidenav-list (sidenavClose)="sidenav.close()"></app-sidenav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <app-menu (sidenavToggle)="sidenav.toggle()"></app-menu>
+    <main>
+      <router-outlet></router-outlet>
+    </main>
+  </mat-sidenav-content>
+</mat-sidenav-container>
