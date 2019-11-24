@@ -1,0 +1,15 @@
+<div class="center">
+    <mat-card>
+        <h2>Poll detail</h2>
+        <mat-list role="list">
+            <mat-list-item role="listitem" *ngFor="let antwoord of (antwoorden | async)">
+                {{antwoord.antwoord}}
+            </mat-list-item>
+        </mat-list>
+        <mat-list role="list">
+                <mat-list-item role="listitem" *ngFor="let pollGebruiker of (pollGebruikers | async)">
+                    {{pollGebruiker.gebruikersnaam}}
+                </mat-list-item>
+            </mat-list>
+    </mat-card>
+</div>

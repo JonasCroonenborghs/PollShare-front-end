@@ -30,9 +30,7 @@ export class VriendenComponent implements OnInit {
     private router: Router) {
     this.gebruikers = this._gebruikerService.getGebruikers();
 
-    this.route.queryParams.subscribe(params => {
-      this.gebruikerID = params["gebruikerID"];
-    });
+    this.gebruikerID = parseInt(localStorage.getItem("gebruikerID"));
   }
 
   meldingForm = this.fb.group({
@@ -47,7 +45,7 @@ export class VriendenComponent implements OnInit {
 
     // Toevoegen van de melding
     this._meldingService.addMelding(this.meldingForm.value).subscribe();
-    
+
     this.melding = this.meldingForm.value;
 
     // Toevoegen van melding aan vriend

@@ -29,6 +29,7 @@ export class InloggenDashboardComponent implements OnInit {
   public email: string;
 
   public polls: Observable<Poll[]>;
+  public aangemaaktePolls: Observable<Poll[]>;
   public antwoorden: Observable<Antwoord[]>;
 
   public meldingen: Observable<Melding[]>;
@@ -37,7 +38,8 @@ export class InloggenDashboardComponent implements OnInit {
   public vriendschappen: Observable<Vriendschap[]>;
   public vrienden: Observable<Gebruiker[]>;
 
-  public teller: number = 0;
+  public aantalVrienden: number = 0;
+  public aantalMeldingen: number = 0;
 
   constructor(
     private fb: FormBuilder,
@@ -55,51 +57,31 @@ export class InloggenDashboardComponent implements OnInit {
       // console.log(e);
     });
 
-    this.route.queryParams.subscribe(params => {
-      this.gebruikerID = params["gebruikerID"];
-      this.gebruikersnaam = params["gebruikersnaam"];
-      this.email = params["email"];
-    });
+    this.gebruikerID = parseInt(localStorage.getItem("gebruikerID"));
+    this.gebruikersnaam = localStorage.getItem("gebruikersnaam");
+    this.email = localStorage.getItem("email");
 
     this.vrienden = _vriendschapService.getVriendschappenByGebruikerID(this.gebruikerID);
     this.meldingGebruikers = _meldingService.GetMeldingGebruikersByGebruikerID(this.gebruikerID);
     this.polls = _pollService.GetPollsByGebruikerID(this.gebruikerID);
+    this.aangemaaktePolls = _pollService.GetPollsByMakerID(this.gebruikerID);
 
-    // this.antwoorden = _antwoordService.getAntwoorden();
-    
-    //Antwoorden bij de polls zetten
-    // this.polls.forEach(poll => {
-    //   poll[this.teller].antwoorden = _antwoordService.GetAntwoordenByPollID(poll[this.teller].pollID);
-    //   poll[this.teller].antwoorden.subscribe(result => {
-    //       console.log(result);
-    //   });
-    //   this.teller++;
-    // });
-  }
+    _vriendschapService.getVriendschappenByGebruikerID(this.gebruikerID).subscribe(result => {
+      this.aantalVrienden++;
+    });
 
-  uitnodigenVrienden() {
-    let navigationExtras: NavigationExtras = {
-      queryParams: {
-        "gebruikerID": this.gebruikerID
-      }
-    };
-
-    this.router.navigate(['/uitnodigenVrienden'], navigationExtras);
-  }
-
-  aanmakenPoll() {
-    this._gebruikerService.getGebruiker(this.gebruikerID).subscribe(result => {
-      let navigationExtras: NavigationExtras = {
-        queryParams: {
-          "gebruikerID": result.gebruikerID
-        }
-      };
-
-      this.router.navigate(['/aanmakenPoll'], navigationExtras);
+    _meldingService.GetMeldingGebruikersByGebruikerID(this.gebruikerID).subscribe(result => {
+      this.aantalMeldingen++;
     });
   }
 
-  
+  uitnodigenVrienden() {
+    this.router.navigate(['/uitnodigenVrienden']);
+  }
+
+  aanmakenPoll() {
+    this.router.navigate(['/aanmakenPoll']);
+  }
 
   stemToevoegen(pollID: number) {
     let navigationExtras: NavigationExtras = {
@@ -110,6 +92,17 @@ export class InloggenDashboardComponent implements OnInit {
     }
 
     this.router.navigate(['/StemToevoegen'], navigationExtras);
+  }
+
+  pollOpenen(pollID: number) {
+    let navigationExtras: NavigationExtras = {
+      queryParams: {
+        "gebruikerID": this.gebruikerID,
+        "pollID": pollID
+      }
+    }
+
+    this.router.navigate(['/pollDetail'], navigationExtras);
   }
 
   vriendschapForm = this.fb.group({
@@ -124,8 +117,10 @@ export class InloggenDashboardComponent implements OnInit {
     this._vriendschapService.addVriendschap(this.vriendschapForm.value).subscribe();
   }
 
-  weigerenVriendscap(meldingID: number) {
-    this._meldingService.removeMelding(meldingID).subscribe();
+  weigerenVriendscap(huidigeGebruikerID: number) {
+    this._meldingService.GetMeldingByHuidigeGebruikerID(huidigeGebruikerID).subscribe(result => {
+      this._meldingService.removeMelding(result.meldingID).subscribe();
+    });
   }
 
   uitloggen() {
@@ -134,5 +129,4 @@ export class InloggenDashboardComponent implements OnInit {
 
   ngOnInit() {
   }
-
 }

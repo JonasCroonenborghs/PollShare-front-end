@@ -26,6 +26,10 @@ export class PollService {
     return this.http.get<Poll[]>("https://localhost:44376/api/Poll/pollGebruikerID?gebruikerID=" + gebruikerID);
   }
 
+  GetPollsByMakerID(makerID: number) {
+    return this.http.get<Poll[]>("https://localhost:44376/api/Poll/makerID?makerID=" + makerID);
+  }
+
   addPoll(poll: Poll) {
     return this.http.post<Poll>("https://localhost:44376/api/poll", poll);
   }

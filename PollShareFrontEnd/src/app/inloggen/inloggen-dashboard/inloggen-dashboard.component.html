@@ -3,98 +3,112 @@
         <h1>Dashboard</h1>
         <h2>Logged in als: {{ gebruikersnaam }}</h2>
         <h2>Email: {{ email }}</h2>
+        <div class="fillContent">
+            <p><mat-icon matBadge={{aantalVrienden}} matBadgeColor="warn">people</mat-icon></p>
+            <p><mat-icon matBadge={{aantalMeldingen}} matBadgeColor="warn">notifications_active</mat-icon></p>
+            <p><button mat-raised-button color="primary" (click)="aanmakenPoll()">Aanmaken poll</button></p>
+            <p><button mat-raised-button color="primary" (click)="uitnodigenVrienden()">Voeg vriend toe</button></p>
+        </div>
+        <mat-grid-list cols="2">
+            <mat-grid-tile>
+                <div class="fillContent">
+                    <h2>Aangemaakte polls</h2>
+                    <mat-accordion>
+                        <mat-expansion-panel *ngFor="let aangemaaktePoll of (aangemaaktePolls | async)"
+                            (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    Poll {{aangemaaktePoll.pollID}}
+                                </mat-panel-title>
+                                <mat-panel-description>
+                                    {{aangemaaktePoll.naam}}
+                                </mat-panel-description>
+                            </mat-expansion-panel-header>
+                            <button mat-raised-button color="primary" (click)="pollOpenen(aangemaaktePoll.pollID)">
+                                <mat-icon>poll</mat-icon> Openen
+                            </button>
+                            <button mat-raised-button color="secondary" (click)="stemToevoegen(aangemaaktePoll.pollID)">
+                                <mat-icon>how_to_vote</mat-icon> Stemmen
+                            </button>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+                </div>
+            </mat-grid-tile>
+            <mat-grid-tile>
+                <div class="fillContent">
+                    <h2>Uitgenodigde Polls</h2>
+                    <mat-accordion>
+                        <mat-expansion-panel *ngFor="let poll of (polls | async)" (opened)="panelOpenState = true"
+                            (closed)="panelOpenState = false">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    Poll {{poll.pollID}}
+                                </mat-panel-title>
+                                <mat-panel-description>
+                                    {{poll.naam}}
+                                </mat-panel-description>
+                            </mat-expansion-panel-header>
+                            <button mat-raised-button color="primary" (click)="pollOpenen(poll.pollID)">
+                                <mat-icon>poll</mat-icon> Openen
+                            </button>
+                            <button mat-raised-button color="secondary" (click)="stemToevoegen(poll.pollID)">
+                                <mat-icon>how_to_vote</mat-icon> Stemmen
+                            </button>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+                </div>
+            </mat-grid-tile>
+        </mat-grid-list>
 
-        <mat-tab-group class="center" style="width: 100%;">
-            <mat-tab label="Polls">
-                <mat-grid-list cols="2" rowHeight="2:1">
-                    <mat-grid-tile>
-                        <div class="fillContent">
-                            <h2>Polls:</h2>
-                            <mat-accordion>
-                                <mat-expansion-panel *ngFor="let poll of (polls | async)"
-                                    (opened)="panelOpenState = true" (closed)="panelOpenState = false">
-                                    <mat-expansion-panel-header>
-                                        <mat-panel-title>
-                                            Poll {{poll.pollID}}
-                                        </mat-panel-title>
-                                        <mat-panel-description>
-                                            {{poll.naam}}
-                                        </mat-panel-description>
-                                    </mat-expansion-panel-header>
-                                    <button mat-raised-button color="primary"
-                                        (click)="stemToevoegen(poll.pollID)">
-                                        <mat-icon>poll</mat-icon> Poll openen
-                                    </button>
-                                    <!-- <mat-selection-list #antwoordenList>
-                                        <mat-list-option *ngFor="let antwoord of (antwoorden | async)">
-                                            {{antwoord.antwoord}}
-                                        </mat-list-option>
-                                    </mat-selection-list> -->
-                                </mat-expansion-panel>
-                            </mat-accordion>
-                        </div>
-                    </mat-grid-tile>
-                </mat-grid-list>
-            </mat-tab>
-            <mat-tab label="Vrienden">
-                <mat-grid-list cols="2" rowHeight="2:1">
-                    <mat-grid-tile>
-                        <div class="fillContent">
-                            <h2>Vrienden:</h2>
-                            <mat-accordion>
-                                <mat-expansion-panel *ngFor="let vriend of (vrienden | async)"
-                                    (opened)="panelOpenState = true" (closed)="panelOpenState = false">
-                                    <mat-expansion-panel-header>
-                                        <mat-panel-title>
-                                            Vriend {{vriend.gebruikersnaam}}
-                                        </mat-panel-title>
-                                        <mat-panel-description>
-                                            {{vriend.email}}
-                                        </mat-panel-description>
-                                    </mat-expansion-panel-header>
-                                    <button mat-raised-button color="secondary">
-                                        <mat-icon>cancel</mat-icon> Verwijderen
-                                    </button>
-                                </mat-expansion-panel>
-                            </mat-accordion>
-                        </div>
-                    </mat-grid-tile>
-                </mat-grid-list>
-            </mat-tab>
-            <mat-tab label="Meldingen">
-                <mat-grid-list cols="2" rowHeight="2:1">
-                    <mat-grid-tile>
-                        <div class="fillContent">
-                            <h2>Meldingen</h2>
-                            <mat-accordion>
-                                <mat-expansion-panel *ngFor="let meldingGebruiker of (meldingGebruikers | async)"
-                                    (opened)="panelOpenState = true" (closed)="panelOpenState = false">
-                                    <mat-expansion-panel-header>
-                                        <mat-panel-title>
-                                            Vrienschapsverzoek van {{meldingGebruiker.gebruikersnaam}}
-                                        </mat-panel-title>
-                                        <mat-panel-description>
-                                            {{meldingGebruiker.email}}
-                                        </mat-panel-description>
-                                    </mat-expansion-panel-header>
-                                    <button mat-raised-button color="primary"
-                                        (click)="aanvaardenVriendschap(meldingGebruiker.gebruikerID)">
-                                        <mat-icon>person_add</mat-icon> Accepteren
-                                    </button>
-                                    <button mat-raised-button color="secondary"
-                                        (click)="weigerenVriendscap(melding.meldingID)">
-                                        <mat-icon>cancel</mat-icon> Verwijderen
-                                    </button>
-                                </mat-expansion-panel>
-                            </mat-accordion>
-                        </div>
-                    </mat-grid-tile>
-                </mat-grid-list>
-            </mat-tab>
-        </mat-tab-group>
-        
-        <p><button mat-raised-button color="primary" (click)="aanmakenPoll()">Aanmaken poll</button></p>
-        <p><button mat-raised-button color="primary" (click)="uitnodigenVrienden()">Voeg vriend toe</button></p>
+        <div class="fillContent">
+            <mat-tab-group class="center" style="width: 100%;">
+                <mat-tab label="Vrienden">
+                    <div class="fillContent">
+                        <mat-accordion>
+                            <mat-expansion-panel *ngFor="let vriend of (vrienden | async)"
+                                (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title>
+                                        Vriend {{vriend.gebruikersnaam}}
+                                    </mat-panel-title>
+                                    <mat-panel-description>
+                                        {{vriend.email}}
+                                    </mat-panel-description>
+                                </mat-expansion-panel-header>
+                                <button mat-raised-button color="secondary">
+                                    <mat-icon>cancel</mat-icon> Verwijderen
+                                </button>
+                            </mat-expansion-panel>
+                        </mat-accordion>
+                    </div>
+                </mat-tab>
+                <mat-tab label="Meldingen">
+                    <div class="fillContent">
+                        <mat-accordion>
+                            <mat-expansion-panel *ngFor="let meldingGebruiker of (meldingGebruikers | async)"
+                                (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title>
+                                        Vrienschapsverzoek van {{meldingGebruiker.gebruikersnaam}}
+                                    </mat-panel-title>
+                                    <mat-panel-description>
+                                        {{meldingGebruiker.email}}
+                                    </mat-panel-description>
+                                </mat-expansion-panel-header>
+                                <button mat-raised-button color="primary"
+                                    (click)="aanvaardenVriendschap(meldingGebruiker.gebruikerID)">
+                                    <mat-icon>person_add</mat-icon> Accepteren
+                                </button>
+                                <button mat-raised-button color="secondary"
+                                    (click)="weigerenVriendscap(meldingGebruiker.gebruikerID)">
+                                    <mat-icon>cancel</mat-icon> Verwijderen
+                                </button>
+                            </mat-expansion-panel>
+                        </mat-accordion>
+                    </div>
+                </mat-tab>
+            </mat-tab-group>
+        </div>
         <p><button mat-raised-button (click)="uitloggen()">Log uit</button></p>
     </mat-card>
 </div>

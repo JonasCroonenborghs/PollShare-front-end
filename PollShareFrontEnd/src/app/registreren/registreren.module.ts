@@ -5,7 +5,6 @@ import { RegistrerenComponent } from './registreren/registreren.component';
 import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
-  //declarations: [RegistrerenComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule

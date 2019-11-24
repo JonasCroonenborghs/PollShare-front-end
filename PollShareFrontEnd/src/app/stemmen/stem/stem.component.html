@@ -1,7 +1,6 @@
 <div class="center">
     <mat-card>
         <form [formGroup]="stemForm" (ngSubmit)="onSubmit()">
-            <!-- <h2>Stem toevoegen aan {{poll.naam}}</h2> -->
             <mat-selection-list formControlName="antwoordID">
                 <mat-list-option *ngFor="let antwoord of (antwoorden | async)" [value]="antwoord.antwoordID">
                     {{antwoord.antwoord}}

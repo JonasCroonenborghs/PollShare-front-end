@@ -46,6 +46,7 @@ import { AntwoordComponent } from './antwoorden/antwoord/antwoord.component';
 import { PollGebruiker } from './poll-gebruikers/models/poll-gebruiker.model';
 import { PollGebruikerComponent } from './poll-gebruikers/poll-gebruiker/poll-gebruiker.component';
 import { StemComponent } from './stemmen/stem/stem.component';
+import { PollDetailComponent } from './polls/poll-detail/poll-detail.component';
 
 const appRoutes: Routes = [
   { path: '', component: StartComponent },
@@ -57,7 +58,8 @@ const appRoutes: Routes = [
   { path: 'aanmakenPoll', component: PollComponent },
   { path: 'aanmakenAntwoord', component: AntwoordComponent },
   { path: 'pollGebruiker', component: PollGebruikerComponent },
-  { path: 'StemToevoegen', component: StemComponent }
+  { path: 'StemToevoegen', component: StemComponent },
+  { path: 'pollDetail', component: PollDetailComponent }
 ];
 
 @NgModule({
@@ -74,7 +76,8 @@ const appRoutes: Routes = [
     InloggenDashboardComponent,
     AntwoordComponent,
     PollGebruikerComponent,
-    StemComponent
+    StemComponent,
+    PollDetailComponent
   ],
   imports: [
     BrowserModule,

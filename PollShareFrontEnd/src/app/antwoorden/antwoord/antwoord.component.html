@@ -6,14 +6,16 @@
                 <input matInput placeholder="Antwoord" type="text" formControlName="antwoord" />
             </mat-form-field>
             <p>
-                <button mat-raised-button color="primary" type="submit" [disabled]="!antwoordForm.valid || submitted">Voeg
+                <button mat-raised-button color="primary" type="submit"
+                    [disabled]="!antwoordForm.valid || submitted">Voeg
                     antwoord toe</button>
             </p>
             <mat-list role="list">
                 <mat-list-item role="listitem" *ngFor="let antwoord of (antwoorden | async)">
                     {{antwoord.antwoord}}
+                    <mat-divider></mat-divider>
                 </mat-list-item>
-              </mat-list>
+            </mat-list>
         </form>
         <p>
             <button mat-raised-button color="primary" (click)="toevoegenPollGebruikers()">Voeg vrienden toe</button>

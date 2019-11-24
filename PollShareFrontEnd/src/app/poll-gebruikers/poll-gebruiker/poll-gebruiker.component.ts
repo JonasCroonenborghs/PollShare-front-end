@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import { PollGebruiker } from '../models/poll-gebruiker.model';
 import { Observable } from 'rxjs';
 import { PollGebruikerService } from '../poll-gebruiker.service';
@@ -41,9 +41,20 @@ export class PollGebruikerComponent implements OnInit {
 
   onSubmit() {
     this.pollGebruikerForm.value.pollID = this.pollID;
-    this._pollGebruikerService.addPollGebruiker(this.pollGebruikerForm.value).subscribe();
+    this._pollGebruikerService.addPollGebruiker(this.pollGebruikerForm.value).subscribe(result => {
+      this.pollGebruikers = this._pollGebruikerService.GetPollGebruikersByPollID(this.pollID);
+    });
 
-    this.router.navigate(['/dashboard']);
+  }
+
+  naarStartscherm() {
+    let navigationExtras: NavigationExtras = {
+      queryParams: {
+        "gebruikerID": this.gebruikerID
+      }
+    };
+    
+    this.router.navigate(['/dashboard'], navigationExtras);
   }
 
   ngOnInit() {

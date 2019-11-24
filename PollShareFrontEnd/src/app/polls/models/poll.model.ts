@@ -6,6 +6,7 @@ export class Poll {
     constructor(
         public pollID: number,
         public naam: string,
+        public makerID: number,
         public antwoorden: Observable<Antwoord[]>
         // public deelnemers: Observable<Gebruiker>
         ) { }

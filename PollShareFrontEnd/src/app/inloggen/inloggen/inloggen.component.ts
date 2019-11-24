@@ -29,19 +29,12 @@ export class InloggenComponent implements OnInit {
     this.submitted = true;
     this._authenticateService.authenticate(this.model).subscribe(result => {
       localStorage.setItem("token", result.token);
+      localStorage.setItem("gebruikerID", result.gebruikerID + "");
+      localStorage.setItem("gebruikersnaam", result.gebruikersnaam);
+      localStorage.setItem("email", result.email);
       this._authenticateService.isLoggedIn.next(result.token ? true : false);
 
-      //Naar dashboardComponent gaan
-      let navigationExtras: NavigationExtras = {
-        queryParams: {
-          "gebruikerID": result.gebruikerID,
-          "gebruikersnaam": result.gebruikersnaam,
-          "email": result.email,
-          "vrienden": result.vrienden,
-          "meldingen": result.meldingen
-        }
-      };
-      this.router.navigate(['/dashboard'], navigationExtras);
+      this.router.navigate(['/dashboard']);
     });
   }
 

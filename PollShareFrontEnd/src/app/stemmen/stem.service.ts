@@ -18,6 +18,10 @@ export class StemService {
     return this.http.get<Stem>("https://localhost:44376/api/stem/" + stemID);
   }
 
+  GetStemmenByAntwoordID(antwoordID: number) {
+    return this.http.get<Stem[]>("https://localhost:44376/api/Stem/antwoordID?antwoordID=" + antwoordID);
+  }
+
   addStem(stem: Stem) {
     return this.http.post<Stem>("https://localhost:44376/api/stem", stem);
   }

@@ -10,6 +10,14 @@ import { Gebruiker } from '../gebruikers/models/gebruiker.model';
 export class MeldingService {
 
   constructor(private http: HttpClient) { }
+  
+  getMelding(meldingID: number) {
+    return this.http.get<Melding>("https://localhost:44376/api/melding/" + meldingID);
+  }
+
+  GetMeldingByHuidigeGebruikerID(huidigeGebruikerID) {
+    return this.http.get<Melding>("https://localhost:44376/api/Melding/huidigeGebruikerID?huidigeGebruikerId=" + huidigeGebruikerID);
+  }
 
   getMeldingen(): Observable<Melding[]> {
     return this.http.get<Melding[]>("https://localhost:44376/api/melding");
@@ -19,9 +27,6 @@ export class MeldingService {
     return this.http.get<Gebruiker[]>("https://localhost:44376/api/Melding/gebruiker/1?gebruikerID=" + gebruikerID);
   }
 
-  getMelding(meldingID: number) {
-    return this.http.get<Melding>("https://localhost:44376/api/melding/" + meldingID);
-  }
 
   addMelding(melding: Melding) {
     return this.http.post<Melding>("https://localhost:44376/api/melding", melding);

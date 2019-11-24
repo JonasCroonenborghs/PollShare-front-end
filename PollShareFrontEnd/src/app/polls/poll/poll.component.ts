@@ -15,7 +15,7 @@ export class PollComponent implements OnInit {
 
   public gebruikerID: number;
   submitted: boolean = false;
-  poll: Poll = new Poll(2, "Test", null);
+  poll: Poll = new Poll(2, "Test", 1, null);
   pollTest: Poll;
 
   constructor(
@@ -23,17 +23,17 @@ export class PollComponent implements OnInit {
     private _pollService: PollService,
     private route: ActivatedRoute,
     private router: Router) {
-    this.route.queryParams.subscribe(params => {
-      this.gebruikerID = params["gebruikerID"];
-    });
-  }
+      this.gebruikerID = parseInt(localStorage.getItem("gebruikerID"));
+    }
 
   pollForm = this.fb.group({
-    naam: ''
+    naam: '',
+    makerID: ''
   });
 
   onSubmit() {
     // this.submitted = true;
+    this.pollForm.value.makerID = this.gebruikerID;
     this._pollService.addPoll(this.pollForm.value).subscribe(result => {
       let navigationExtras: NavigationExtras = {
         queryParams: {

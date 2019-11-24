@@ -39,7 +39,10 @@ export class AntwoordComponent implements OnInit {
 
   onSubmit() {
     this.antwoordForm.value.pollID = this.pollID;
-    this._antwoordService.addAntwoord(this.antwoordForm.value).subscribe();
+    this._antwoordService.addAntwoord(this.antwoordForm.value).subscribe(result => {
+      this.antwoorden = this._antwoordService.GetAntwoordenByPollID(this.pollID);
+    });
+
   }
 
   toevoegenPollGebruikers() {
