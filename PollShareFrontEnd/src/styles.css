@@ -5,6 +5,7 @@
 html, body { 
     margin: 0;
     height: 100%;
+    color: white;
 }
 
 .center {
@@ -19,10 +20,37 @@ html, body {
     width: 100%;
 }
 
+.mat-form-field-outline,
+.mat-form-field-empty.mat-form-field-label,
+.mat-form-field-label,
+.mat-form-field-underline,
+.mat-input-element,
+.mat-tab-label .mat-tab-label-content,
+.mat-list-base .mat-list-item .mat-list-item-content, 
+.mat-list-base .mat-list-option 
+.mat-list-item-content,
+.mat-pseudo-checkbox,
+::placeholder {
+color: white !important;
+}
+
+.mat-card {
+    background: #393e46;
+    color: white !important;
+}
+
 .mat-toolbar.mat-primary {
     background: #4193ad; 
 }
 
 .mat-fab.mat-primary, .mat-flat-button.mat-primary, .mat-mini-fab.mat-primary, .mat-raised-button.mat-primary {
     background: #4193ad; 
+}
+
+.mat-sidenav-content {
+    background: #232931;
+}
+
+.mat-drawer-inner-container {
+    background: black;
 }

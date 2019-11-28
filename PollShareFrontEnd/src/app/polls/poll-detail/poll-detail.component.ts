@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Antwoord } from 'src/app/antwoorden/models/antwoord.model';
 import { AntwoordService } from 'src/app/antwoorden/antwoord.service';
@@ -23,10 +23,8 @@ export class PollDetailComponent implements OnInit {
   gebruikerID: number;
 
   poll: Poll;
+  pollNaam: string;
   antwoorden: Observable<Antwoord[]>;
-  pollGebruikers: Observable<PollGebruiker[]>;
-  gebruikers: Observable<Gebruiker[]>;
-  stemmen: Observable<Stem[]>;
 
   constructor(
     private _pollService: PollService,
@@ -38,22 +36,26 @@ export class PollDetailComponent implements OnInit {
     private router: Router) {
     this.route.queryParams.subscribe(params => {
       this.pollID = params["pollID"];
-      this.gebruikerID = params["gebruikerID"];
     });
 
+    this.gebruikerID = parseInt(localStorage.getItem("gebruikerID"));
     _pollService.getPoll(this.pollID).subscribe(result => {
       this.poll = result;
+      this.pollNaam = result.naam;
     });
 
     this.antwoorden = _antwoordService.GetAntwoordenByPollID(this.pollID);
-    this.pollGebruikers = _pollGebruikerService.GetPollGebruikersByPollID(this.pollID);
-    
-    this.antwoorden.forEach(antwoord => {
-      console.log(antwoord);
-    });
   }
 
-  ngOnInit() {
+  stemToevoegen(pollID: number) {
+    let navigationExtras: NavigationExtras = {
+      queryParams: {
+        "pollID": pollID
+      }
+    }
+
+    this.router.navigate(['/StemToevoegen'], navigationExtras);
   }
 
+  ngOnInit() {}
 }

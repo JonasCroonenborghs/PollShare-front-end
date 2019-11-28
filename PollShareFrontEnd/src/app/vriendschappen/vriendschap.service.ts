@@ -15,6 +15,10 @@ export class VriendschapService {
     return this.http.get<Vriendschap[]>("https://localhost:44376/api/vriendschap");
   }
 
+  GetAantalVriendenByGebruikerID(gebruikerID: number) {
+    return this.http.get<number>("https://localhost:44376/api/Vriendschap/gebruikerId?gebruikerID=" + gebruikerID);
+  }
+
   getVriendschappenByGebruikerID(gebruikerID: number) {
     return this.http.get<Gebruiker[]>("https://localhost:44376/api/vriendschap/gebruiker/1?gebruikerID=" + gebruikerID);
   }

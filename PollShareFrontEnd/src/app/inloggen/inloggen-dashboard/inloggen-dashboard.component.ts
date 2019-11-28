@@ -3,15 +3,10 @@ import { Gebruiker } from 'src/app/gebruikers/models/gebruiker.model';
 import { AuthenticateService } from '../services/authenticate.service';
 import { ActivatedRoute, Router, NavigationExtras } from "@angular/router";
 import { Observable } from 'rxjs';
-import { GebruikerService } from 'src/app/gebruikers/gebruiker.service';
-import { Melding } from 'src/app/gebruikers/models/melding.model';
 import { MeldingService } from 'src/app/meldingen/melding.service';
 import { Poll } from 'src/app/polls/models/poll.model';
 import { PollService } from 'src/app/polls/poll.service';
-import { AntwoordService } from 'src/app/antwoorden/antwoord.service';
-import { Antwoord } from 'src/app/antwoorden/models/antwoord.model';
 import { VriendschapService } from 'src/app/vriendschappen/vriendschap.service';
-import { Vriendschap } from 'src/app/vriendschappen/models/vriendschap.model';
 import { FormBuilder } from '@angular/forms';
 
 @Component({
@@ -23,19 +18,14 @@ export class InloggenDashboardComponent implements OnInit {
 
   @Input() gebruiker: Gebruiker;
 
-  public test: number;
   public gebruikerID: number;
   public gebruikersnaam: string;
   public email: string;
 
   public polls: Observable<Poll[]>;
   public aangemaaktePolls: Observable<Poll[]>;
-  public antwoorden: Observable<Antwoord[]>;
 
-  public meldingen: Observable<Melding[]>;
   public meldingGebruikers: Observable<Gebruiker[]>;
-
-  public vriendschappen: Observable<Vriendschap[]>;
   public vrienden: Observable<Gebruiker[]>;
 
   public aantalVrienden: number = 0;
@@ -44,10 +34,8 @@ export class InloggenDashboardComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private _vriendschapService: VriendschapService,
-    private _antwoordService: AntwoordService,
     private _pollService: PollService,
     private _meldingService: MeldingService,
-    private _gebruikerService: GebruikerService,
     private _authenticateService: AuthenticateService,
     private route: ActivatedRoute,
     private router: Router) {
@@ -66,12 +54,12 @@ export class InloggenDashboardComponent implements OnInit {
     this.polls = _pollService.GetPollsByGebruikerID(this.gebruikerID);
     this.aangemaaktePolls = _pollService.GetPollsByMakerID(this.gebruikerID);
 
-    _vriendschapService.getVriendschappenByGebruikerID(this.gebruikerID).subscribe(result => {
-      this.aantalVrienden++;
+    _vriendschapService.GetAantalVriendenByGebruikerID(this.gebruikerID).subscribe(result => {
+      this.aantalVrienden = result;
     });
 
-    _meldingService.GetMeldingGebruikersByGebruikerID(this.gebruikerID).subscribe(result => {
-      this.aantalMeldingen++;
+    _meldingService.GetAantalMeldingGebruikersByGebruikerID(this.gebruikerID).subscribe(result => {
+      this.aantalMeldingen = result;
     });
   }
 
@@ -115,12 +103,19 @@ export class InloggenDashboardComponent implements OnInit {
     this.vriendschapForm.value.vriendID = vriendID;
 
     this._vriendschapService.addVriendschap(this.vriendschapForm.value).subscribe();
+    this._meldingService.GetMeldingByHuidigeGebruikerID(this.gebruikerID).subscribe(result => {
+      this._meldingService.removeMelding(result.meldingID).subscribe();
+    });
+
+    this.router.navigate(['/dashboard']);
   }
 
   weigerenVriendscap(huidigeGebruikerID: number) {
     this._meldingService.GetMeldingByHuidigeGebruikerID(huidigeGebruikerID).subscribe(result => {
       this._meldingService.removeMelding(result.meldingID).subscribe();
     });
+
+    this.router.navigate(['/dashboard']);
   }
 
   uitloggen() {

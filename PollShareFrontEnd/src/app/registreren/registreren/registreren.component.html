@@ -1,6 +1,5 @@
 <div class="center">
     <mat-card>
-        <mat-icon>person_add</mat-icon>
         <h2>Registreren</h2>
         <form [formGroup]="gebruikerForm" (ngSubmit)="onSubmit()">
             <mat-form-field>
@@ -8,14 +7,16 @@
             </mat-form-field>
             <br />
             <mat-form-field>
-                <input matInput placeholder="Wachtwoord" type="text" formControlName="wachtwoord" />
+                <input matInput placeholder="Gebruikersnaam" type="text" formControlName="gebruikersnaam" />
             </mat-form-field>
             <br />
             <mat-form-field>
-                <input matInput placeholder="Gebruikersnaam" type="text" formControlName="gebruikersnaam" />
+                <input matInput placeholder="Wachtwoord" type="password" autocomplete="off" formControlName="wachtwoord" />
             </mat-form-field>
             <p>
-                <button mat-raised-button color="primary" type="submit" [disabled]="!gebruikerForm.valid || submitted">Registreer</button>
+                <button mat-raised-button color="primary" type="submit" [disabled]="!gebruikerForm.valid || submitted">
+                    <mat-icon>add</mat-icon> Registreer
+                </button>
             </p>
         </form>
     </mat-card>

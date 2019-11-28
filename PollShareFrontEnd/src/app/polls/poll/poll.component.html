@@ -6,10 +6,10 @@
                 <input matInput placeholder="Naam" type="text" formControlName="naam" />
             </mat-form-field>
             <p>
-                <button mat-raised-button color="primary" type="submit" [disabled]="!pollForm.valid || submitted">Voeg
-                    poll toe</button>
+                <button mat-raised-button color="primary" type="submit" [disabled]="!pollForm.valid || submitted">
+                    <mat-icon>add</mat-icon> Voeg poll toe
+                </button>
             </p>
         </form>
-        <mat-progress-bar mode="determinate" value="30"></mat-progress-bar>
     </mat-card>
 </div>

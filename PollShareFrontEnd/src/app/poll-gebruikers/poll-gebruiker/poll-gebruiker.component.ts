@@ -16,8 +16,8 @@ export class PollGebruikerComponent implements OnInit {
 
   pollID: number;
   gebruikerID: number;
-  pollGebruikers: Observable<PollGebruiker[]>;
   vrienden: Observable<Gebruiker[]>;
+  pollGebruikers: Observable<PollGebruiker[]>;
 
   constructor(
     private _vriendschapService: VriendschapService,
@@ -27,11 +27,11 @@ export class PollGebruikerComponent implements OnInit {
     private router: Router) {
     this.route.queryParams.subscribe(params => {
       this.pollID = params["pollID"];
-      this.gebruikerID = params["gebruikerID"];
     });
 
-    this.pollGebruikers = _pollGebruikerService.GetPollGebruikersByPollID(this.pollID);
+    this.gebruikerID = parseInt(localStorage.getItem("gebruikerID"));
     this.vrienden = _vriendschapService.getVriendschappenByGebruikerID(this.gebruikerID);
+    this.pollGebruikers = _pollGebruikerService.GetPollGebruikersByPollID(this.pollID);
   }
 
   pollGebruikerForm = this.fb.group({
@@ -48,13 +48,7 @@ export class PollGebruikerComponent implements OnInit {
   }
 
   naarStartscherm() {
-    let navigationExtras: NavigationExtras = {
-      queryParams: {
-        "gebruikerID": this.gebruikerID
-      }
-    };
-    
-    this.router.navigate(['/dashboard'], navigationExtras);
+    this.router.navigate(['/dashboard']);
   }
 
   ngOnInit() {

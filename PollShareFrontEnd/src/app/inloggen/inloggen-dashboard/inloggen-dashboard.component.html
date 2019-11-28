@@ -4,10 +4,21 @@
         <h2>Logged in als: {{ gebruikersnaam }}</h2>
         <h2>Email: {{ email }}</h2>
         <div class="fillContent">
-            <p><mat-icon matBadge={{aantalVrienden}} matBadgeColor="warn">people</mat-icon></p>
-            <p><mat-icon matBadge={{aantalMeldingen}} matBadgeColor="warn">notifications_active</mat-icon></p>
-            <p><button mat-raised-button color="primary" (click)="aanmakenPoll()">Aanmaken poll</button></p>
-            <p><button mat-raised-button color="primary" (click)="uitnodigenVrienden()">Voeg vriend toe</button></p>
+            <p>
+                <mat-icon matBadge={{aantalVrienden}} matBadgeColor="warn">people</mat-icon>
+            </p>
+            <p>
+                <mat-icon matBadge={{aantalMeldingen}} matBadgeColor="warn">notifications_active</mat-icon>
+            </p>
+            <mat-divider></mat-divider>
+            <br />
+            <p><button mat-raised-button color="primary" (click)="aanmakenPoll()">
+                    <mat-icon>poll</mat-icon> Aanmaken poll
+                </button></p>
+            <p><button mat-raised-button color="primary" (click)="uitnodigenVrienden()">
+                    <mat-icon>person_add</mat-icon> Voeg vriend toe
+                </button></p>
+            <mat-divider></mat-divider>
         </div>
         <mat-grid-list cols="2">
             <mat-grid-tile>
@@ -64,22 +75,10 @@
             <mat-tab-group class="center" style="width: 100%;">
                 <mat-tab label="Vrienden">
                     <div class="fillContent">
-                        <mat-accordion>
-                            <mat-expansion-panel *ngFor="let vriend of (vrienden | async)"
-                                (opened)="panelOpenState = true" (closed)="panelOpenState = false">
-                                <mat-expansion-panel-header>
-                                    <mat-panel-title>
-                                        Vriend {{vriend.gebruikersnaam}}
-                                    </mat-panel-title>
-                                    <mat-panel-description>
-                                        {{vriend.email}}
-                                    </mat-panel-description>
-                                </mat-expansion-panel-header>
-                                <button mat-raised-button color="secondary">
-                                    <mat-icon>cancel</mat-icon> Verwijderen
-                                </button>
-                            </mat-expansion-panel>
-                        </mat-accordion>
+                        <mat-list role="list" *ngFor="let vriend of (vrienden | async)">
+                            <mat-list-item role="listitem">{{vriend.gebruikersnaam}} - {{vriend.email}}</mat-list-item>
+                            <mat-divider></mat-divider>
+                        </mat-list>
                     </div>
                 </mat-tab>
                 <mat-tab label="Meldingen">

@@ -5,8 +5,7 @@ import { Observable } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MeldingService } from '../meldingen/melding.service';
 import { Melding } from '../gebruikers/models/melding.model';
-import { AuthenticateService } from '../inloggen/services/authenticate.service';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-vrienden',
@@ -15,7 +14,6 @@ import { FormBuilder } from '@angular/forms';
 })
 export class VriendenComponent implements OnInit {
 
-  submitted: boolean = false;
   gebruikerID: number;
   gebruikers: Observable<Gebruiker[]>;
 
@@ -25,7 +23,6 @@ export class VriendenComponent implements OnInit {
     private fb: FormBuilder,
     private _gebruikerService: GebruikerService,
     private _meldingService: MeldingService,
-    private _authenticateService: AuthenticateService,
     private route: ActivatedRoute,
     private router: Router) {
     this.gebruikers = this._gebruikerService.getGebruikers();
@@ -35,25 +32,16 @@ export class VriendenComponent implements OnInit {
 
   meldingForm = this.fb.group({
     huidigeGebruikerID: '',
-    vriendID: '',
+    vriendID: ['', Validators.required],
     type: "Vriendschapsverzoek"
   });
 
   onSubmit() {
-    // this.submitted = true;
     this.meldingForm.value.huidigeGebruikerID = this.gebruikerID;
 
-    // Toevoegen van de melding
-    this._meldingService.addMelding(this.meldingForm.value).subscribe();
-
-    this.melding = this.meldingForm.value;
-
-    // Toevoegen van melding aan vriend
-    this._gebruikerService.getGebruiker(this.meldingForm.value.vriendID).subscribe(result => {
-      // Hier melding (this.melding) toevoegen aan vriendGebruiker (result)
-      console.log(result);
-      console.log(this.melding);
-      this._gebruikerService.updateGebruiker(result, this.melding);
+    this._gebruikerService.GetGebruikerByEmail(this.meldingForm.value.vriendID).subscribe(result => {
+      this.meldingForm.value.vriendID = result.gebruikerID;
+      this._meldingService.addMelding(this.meldingForm.value).subscribe();
     });
 
     this.router.navigate(['/dashboard']);

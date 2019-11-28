@@ -13,19 +13,19 @@
             </mat-form-field>
             <p>
                 <button mat-raised-button color="primary" type="submit"
-                    [disabled]="!pollGebruikerForm.valid || submitted">Voeg
-                    pollGebruiker toe</button>
+                    [disabled]="!pollGebruikerForm.valid || submitted">
+                    <mat-icon>add</mat-icon> Voeg vriend toe</button>
             </p>
-            <mat-list role="list">
+            <mat-list role="list" class="center">
                 <mat-list-item role="listitem" *ngFor="let pollGebruiker of (pollGebruikers | async)">
-                    {{pollGebruiker.gebruikerID}}
+                    Vriend ID: {{pollGebruiker.gebruikerID}}
                     <mat-divider></mat-divider>
                 </mat-list-item>
             </mat-list>
         </form>
         <p>
-            <button mat-raised-button color="primary" (click)="naarStartscherm()">Klaar</button>
+            <button mat-raised-button color="primary" (click)="naarStartscherm()">
+                <mat-icon>home</mat-icon> Launch poll</button>
         </p>
-        <mat-progress-bar mode="determinate" value="100"></mat-progress-bar>
     </mat-card>
 </div>

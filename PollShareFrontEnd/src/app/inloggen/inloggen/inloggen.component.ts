@@ -6,6 +6,7 @@ import { Router, NavigationExtras } from '@angular/router';
 
 import { InloggenDashboardComponent } from '../inloggen-dashboard/inloggen-dashboard.component';
 import { Melding } from 'src/app/meldingen/models/melding.model';
+import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-inloggen',
@@ -13,21 +14,22 @@ import { Melding } from 'src/app/meldingen/models/melding.model';
   styleUrls: ['./inloggen.component.css']
 })
 export class InloggenComponent implements OnInit {
-  
+
   submitted: boolean = false;
 
   constructor(
+    private fb: FormBuilder,
     private _authenticateService: AuthenticateService,
-    private router: Router
-  ) { }
+    private router: Router) { }
 
-  model: GebruikerLogin = new GebruikerLogin(
-    "Test",
-    "Test");
+  loginForm = this.fb.group({
+    gebruikersnaam: ['', Validators.required],
+    wachtwoord: ['', Validators.required]
+  });
 
   onSubmit() {
     this.submitted = true;
-    this._authenticateService.authenticate(this.model).subscribe(result => {
+    this._authenticateService.authenticate(this.loginForm.value).subscribe(result => {
       localStorage.setItem("token", result.token);
       localStorage.setItem("gebruikerID", result.gebruikerID + "");
       localStorage.setItem("gebruikersnaam", result.gebruikersnaam);

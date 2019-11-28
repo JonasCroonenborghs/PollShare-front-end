@@ -1,15 +1,21 @@
 <div class="center">
     <mat-card>
-        <h2>Poll detail</h2>
+        <h2>Poll {{pollNaam}}</h2>
+        <h3>Antwoorden & stemmen</h3>
         <mat-list role="list">
             <mat-list-item role="listitem" *ngFor="let antwoord of (antwoorden | async)">
-                {{antwoord.antwoord}}
+                <h4>Antwoord: {{antwoord.antwoord}}</h4>
+                <h4>Aantal: {{antwoord.aantalStemmen}}</h4>
+                <mat-progress-bar mode="determinate" value="{{antwoord.aantalStemmen}}0"></mat-progress-bar>
+                <mat-divider></mat-divider>
             </mat-list-item>
         </mat-list>
-        <mat-list role="list">
-                <mat-list-item role="listitem" *ngFor="let pollGebruiker of (pollGebruikers | async)">
-                    {{pollGebruiker.gebruikersnaam}}
-                </mat-list-item>
-            </mat-list>
+        <br />
+        <button mat-raised-button color="primary" (click)="stemToevoegen(poll.pollID)">
+            <mat-icon>how_to_vote</mat-icon> Stemmen
+        </button>
+        <p><a mat-raised-button color="secondary" routerLink="/dashboard" routerLinkActive="active">
+                <mat-icon>home</mat-icon>Startscherm
+            </a></p>
     </mat-card>
 </div>

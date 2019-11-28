@@ -4,7 +4,7 @@ import { GebruikerService } from 'src/app/gebruikers/gebruiker.service';
 import { Gebruiker } from 'src/app/inloggen/models/gebruiker.model';
 import { Poll } from '../models/poll.model';
 import { PollService } from '../poll.service';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-poll',
@@ -14,9 +14,6 @@ import { FormBuilder } from '@angular/forms';
 export class PollComponent implements OnInit {
 
   public gebruikerID: number;
-  submitted: boolean = false;
-  poll: Poll = new Poll(2, "Test", 1, null);
-  pollTest: Poll;
 
   constructor(
     private fb: FormBuilder,
@@ -27,18 +24,16 @@ export class PollComponent implements OnInit {
     }
 
   pollForm = this.fb.group({
-    naam: '',
+    naam:  ['', Validators.required],
     makerID: ''
   });
 
   onSubmit() {
-    // this.submitted = true;
     this.pollForm.value.makerID = this.gebruikerID;
     this._pollService.addPoll(this.pollForm.value).subscribe(result => {
       let navigationExtras: NavigationExtras = {
         queryParams: {
-          "pollID": result.pollID,
-          "gebruikerID": this.gebruikerID
+          "pollID": result.pollID
         }
       };
 

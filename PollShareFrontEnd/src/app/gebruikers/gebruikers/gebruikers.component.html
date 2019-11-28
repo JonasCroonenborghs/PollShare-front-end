@@ -1,14 +1,9 @@
 <div class="center">
   <mat-card>
     <h2>Gebruikers</h2>
-    <mat-selection-list #gebruikersList>
-      <mat-list-option *ngFor="let gebruiker of (gebruikers | async)">
-        {{gebruiker.gebruikersnaam}}
-      </mat-list-option>
-    </mat-selection-list>
-
-    <p>
-      Options selected: {{gebruikersList.selectedOptions.selected.length}}
-    </p>
+    <mat-list role="list" *ngFor="let gebruiker of (gebruikers | async)" class="center">
+      <mat-list-item role="listitem">{{gebruiker.gebruikersnaam}}</mat-list-item>
+      <mat-divider></mat-divider>
+    </mat-list>
   </mat-card>
 </div>

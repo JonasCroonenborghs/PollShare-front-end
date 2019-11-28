@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import { Poll } from 'src/app/polls/models/poll.model';
 import { PollService } from 'src/app/polls/poll.service';
 import { Observable } from 'rxjs';
@@ -19,6 +19,7 @@ export class StemComponent implements OnInit {
   gebruikerID: number;
 
   poll: Poll;
+  pollNaam: string;
   antwoorden: Observable<Antwoord[]>;
 
   constructor(
@@ -29,12 +30,12 @@ export class StemComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router) {
     this.route.queryParams.subscribe(params => {
-      this.gebruikerID = params["gebruikerID"];
       this.pollID = params["pollID"];
     });
 
     _pollService.getPoll(this.pollID).subscribe(result => {
       this.poll = result;
+      this.pollNaam = result.naam;
     });
 
     this.antwoorden = _antwoordService.GetAntwoordenByPollID(this.pollID);
@@ -49,6 +50,14 @@ export class StemComponent implements OnInit {
     this.stemForm.value.gebruikerID = this.gebruikerID;
     this.stemForm.value.antwoordID = this.stemForm.value.antwoordID[0]
     this._stemService.addStem(this.stemForm.value).subscribe();
+
+    let navigationExtras: NavigationExtras = {
+      queryParams: {
+        "pollID": this.pollID
+      }
+    }
+
+    this.router.navigate(['/pollDetail'], navigationExtras);
   }
 
   ngOnInit() {

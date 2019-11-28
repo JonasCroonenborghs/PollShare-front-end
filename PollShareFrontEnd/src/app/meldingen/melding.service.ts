@@ -27,6 +27,9 @@ export class MeldingService {
     return this.http.get<Gebruiker[]>("https://localhost:44376/api/Melding/gebruiker/1?gebruikerID=" + gebruikerID);
   }
 
+  GetAantalMeldingGebruikersByGebruikerID(gebruikerID: number) {
+    return this.http.get<number>("https://localhost:44376/api/Melding/gebruikerId?gebruikerID=" + gebruikerID);
+  }
 
   addMelding(melding: Melding) {
     return this.http.post<Melding>("https://localhost:44376/api/melding", melding);
